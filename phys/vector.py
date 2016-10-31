@@ -4,9 +4,28 @@ class Vector(object):
     x = None
     y = None
 
-    def __init__(self, x=0.0, y=0.0):
-        self.x = float(x)
-        self.y = float(y)
+    def __init__(self, x=0.0, y=0.0, copy_from=None):
+        if type(x) is Vector:
+            self.x = x.x
+            self.y = x.y
+        elif copy_from is not None:
+            self.x = copy.x
+            self.y = copy.y
+        else:
+            self.x = float(x)
+            self.y = float(y)
+
+    @staticmethod
+    def normal_from_angle(angle, magnitude=1):
+        """
+            Builds a vector normal from the angle.
+
+            :parameters:
+                angle - The angle in radians to build the normal from.
+                magnitude - The magnitude to multiply the normal by. If not specified, this defaults
+                to 1.
+        """
+        return Vector(math.cos(angle) * magnitude, math.sin(angle) * magnitude)
 
     def __add__(self, rhs):
         return Vector(self.x + rhs.x, self.y + rhs.y)

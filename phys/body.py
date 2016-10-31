@@ -42,13 +42,31 @@ class Body(object):
         self.simulation = simulation
 
     def step(self, delta):
+        # Step us along on our position and rotation
+        self.translate(self._position + (self.velocity * delta))
+        self.rotate(self._rotation + (self.torque * delta))
+
         for body in self.simulation.bodies:
             if (body is self or body.collision_mask & self.collision_mask == 0):
                 continue
 
             # We run this loop for each collision check
+            # TODO: Implement collision code. We want to modify positions and rotations accordingly
+            # here.
+            if self.intersects(body):
+                pass
 
     def contains_point(self, point):
+        """
+            Determines whether or not the specified point is contained within this body.
+
+            :parameters:
+                point - The vector to test for.
+
+            :returns:
+                True if the vector is contained. False otherwise.
+        """
+
         left = False
         right = False
         above = False
